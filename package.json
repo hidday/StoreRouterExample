@@ -1,16 +1,20 @@
 {
-  "name": "untitled",
+  "name": "RouterExample",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bull": "^3.7.0",
+    "collections": "^5.1.8",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
+    "ioredis": "^4.6.2",
     "morgan": "~1.9.0",
+    "priorityqueue": "^0.2.1",
     "pug": "2.0.0-beta11"
   }
 }
