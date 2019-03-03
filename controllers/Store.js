@@ -1,24 +1,39 @@
 'use strict';
 
-import * as requestRouter from '../lib/StoreRequestRouter';
+const {routeRequest} = require('../lib/StoreRequestRouter');
 
 module.exports = {
     handleCampaignsRequest: (request, response) => {
-        const storeId = request.query.storeId;
-        requestRouter.routeRequest(storeId, request);
-        // console.log(`Store Id: ${storeId} . Request Data: ${request}`);
+        try {
+            const storeId = request.query.storeId;
+            routeRequest(storeId, request);
+            // console.log(`Store Id: ${storeId} . Request Data: ${request}`);
+        } catch (e) {
+            console.log('error occured: ', e);
+            response.send(e);
+        }
     },
 
     handleGiftCardRequest: (request, response) => {
-        const storeId = request.query.storeId;
-        requestRouter.routeRequest(storeId, request);
-        // console.log(`Store Id: ${storeId} . Request Data: ${request}`);
+        try {
+            const storeId = request.query.storeId;
+            routeRequest(storeId, request);
+            // console.log(`Store Id: ${storeId} . Request Data: ${request}`);
+        } catch (e) {
+            console.log('error occured: ', e);
+            response.send(e);
+        }
     },
 
     handleSettingRequest: (request, response) => {
-        const storeId = request.query.storeId;
-        requestRouter.routeRequest(storeId, request);
+        try {
+            const storeId = request.query.storeId;
+            routeRequest(storeId, request);
 
-        // console.log(`Store Id: ${storeId} . Request Data: ${request}`);
+            // console.log(`Store Id: ${storeId} . Request Data: ${request}`);
+        } catch (e) {
+            console.log('error occured: ', e);
+            response.send(e);
+        }
     }
 };

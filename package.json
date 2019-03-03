@@ -6,6 +6,8 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
     "bull": "^3.7.0",
     "collections": "^5.1.8",
     "cookie-parser": "~1.4.3",
