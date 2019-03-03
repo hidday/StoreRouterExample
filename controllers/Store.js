@@ -6,7 +6,7 @@ module.exports = {
     handleCampaignsRequest: (request, response) => {
         try {
             const storeId = request.query.storeId;
-            routeRequest(storeId, request);
+            return routeRequest(storeId, request);
             // console.log(`Store Id: ${storeId} . Request Data: ${request}`);
         } catch (e) {
             console.log('error occured: ', e);
@@ -17,7 +17,7 @@ module.exports = {
     handleGiftCardRequest: (request, response) => {
         try {
             const storeId = request.query.storeId;
-            routeRequest(storeId, request);
+            return routeRequest(storeId, request);
             // console.log(`Store Id: ${storeId} . Request Data: ${request}`);
         } catch (e) {
             console.log('error occured: ', e);
@@ -28,7 +28,7 @@ module.exports = {
     handleSettingRequest: (request, response) => {
         try {
             const storeId = request.query.storeId;
-            routeRequest(storeId, request);
+            return routeRequest(storeId, request);
 
             // console.log(`Store Id: ${storeId} . Request Data: ${request}`);
         } catch (e) {
