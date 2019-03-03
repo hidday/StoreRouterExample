@@ -3,32 +3,33 @@
 const {routeRequest} = require('../lib/StoreRequestRouter');
 
 module.exports = {
-    handleCampaignsRequest: (request, response) => {
+    handleCampaignsRequest: async (request, response) => {
         try {
             const storeId = request.query.storeId;
-            return routeRequest(storeId, request);
-            // console.log(`Store Id: ${storeId} . Request Data: ${request}`);
+            let result = await routeRequest(storeId, request);
+            response.send(result);
         } catch (e) {
             console.log('error occured: ', e);
             response.send(e);
         }
     },
 
-    handleGiftCardRequest: (request, response) => {
+    handleGiftCardRequest: async (request, response) => {
         try {
             const storeId = request.query.storeId;
-            return routeRequest(storeId, request);
-            // console.log(`Store Id: ${storeId} . Request Data: ${request}`);
+            let result = await routeRequest(storeId, request);
+            response.send(result);
         } catch (e) {
             console.log('error occured: ', e);
             response.send(e);
         }
     },
 
-    handleSettingRequest: (request, response) => {
+    handleSettingRequest: async (request, response) => {
         try {
             const storeId = request.query.storeId;
-            return routeRequest(storeId, request);
+            let result = await routeRequest(storeId, request);
+            response.send(result);
 
             // console.log(`Store Id: ${storeId} . Request Data: ${request}`);
         } catch (e) {
