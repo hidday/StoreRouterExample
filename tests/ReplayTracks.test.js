@@ -1,7 +1,4 @@
 process.env.NODE_ENV = 'development';
-const jwt = require('jsonwebtoken');
-const authSecretJWT = require('config').get('auth.secret_jwt');
-const jwtToken = jwt.sign({ data: 'foobar' }, authSecretJWT, { expiresIn: '1h' });
 
 //During the test the env variable is set to test
 const Mocha = require('mocha');
@@ -14,8 +11,7 @@ const chaiHttp = require('chai-http');
 const expect = chai.expect;
 chai.use(chaiHttp);
 
-const server = '192.168.10.10:3000';
-// const server = 'http://out.top5-hostingsites.com';
+const server = 'localhost:3000';
 const numberOfTracks = 50;
 let replayedTracksTokens = [];
 let trackQueryRecords = null;
@@ -24,7 +20,7 @@ describe('Replay Tracks', () => {
     before(async () => {
         // read track queries from out_db
         return await chai.request(server)
-            .post(`/test/getTrackQueries/`)
+            .get(`/test/getTrackQueries/`)
             .set('token', jwtToken)
             .send({ numOfTracks: numberOfTracks })
             .then((res) => {
