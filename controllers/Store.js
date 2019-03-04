@@ -6,8 +6,11 @@ module.exports = {
     handleCampaignsRequest: async (request, response) => {
         try {
             const storeId = request.query.storeId;
+            if (!storeId) {
+                return response.send('No store id!');
+            }
             let result = await routeRequest(storeId, request);
-            response.send(result);
+            response.send(result.data);
         } catch (e) {
             console.log('error occured: ', e);
             response.send(e);
@@ -16,9 +19,12 @@ module.exports = {
 
     handleGiftCardRequest: async (request, response) => {
         try {
-            const storeId = request.query.storeId;
+            const storeId = request.params.storeId;
+            if (!storeId) {
+                return response.send('No store id!');
+            }
             let result = await routeRequest(storeId, request);
-            response.send(result);
+            response.send(result.data);
         } catch (e) {
             console.log('error occured: ', e);
             response.send(e);
@@ -27,9 +33,12 @@ module.exports = {
 
     handleSettingRequest: async (request, response) => {
         try {
-            const storeId = request.query.storeId;
+            const storeId = request.headers.storeid;
+            if (!storeId) {
+                return response.send('No store id!');
+            }
             let result = await routeRequest(storeId, request);
-            response.send(result);
+            response.send(result.data);
 
             // console.log(`Store Id: ${storeId} . Request Data: ${request}`);
         } catch (e) {

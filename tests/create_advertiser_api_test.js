@@ -24,7 +24,7 @@ describe('Advertiser', () => {
         const data = {
             name: 'An Advertiser Title',
             status: 'active',
-            url: 'http://www.test.com',
+            url: 'http://storerouter.test.com',
         };
 
         it('it should create advertiser with provided mongodb_id', (done) => {
