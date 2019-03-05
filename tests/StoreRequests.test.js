@@ -1,7 +1,8 @@
-//During the test the env variable is set to test
-const uuid = require('uuid');
-
 process.env.NODE_ENV = 'development';
+
+//During the test the env variable is set to test
+require('collections');
+const uuid = require('uuid');
 const Mocha = require('mocha');
 const {before, describe, after, it} = Mocha;
 
@@ -13,17 +14,8 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 const server = 'localhost:3000/';
-const numberOfRequestsPerStoreRoute = 50;
 const numberOfMockStores= 5;
-let mockRequestsUrls = [];
-for (let i = 0; i < numberOfMockStores; i++) {
-    let generatedStoreId = uuid.v4();
-    for (let j = 0; j < numberOfRequestsPerStoreRoute; j++) {
-        mockRequestsUrls.push(`api/v1/storeId/${generatedStoreId}/giftCard`);
-        mockRequestsUrls.push(`/api/v1/campaigns/?${generatedStoreId}`);
-        mockRequestsUrls.push(`api/v1/settings`);
-    }
-}
+
 describe('Send store api requests', () => {
 
     it('Send campaign request',async () => {
@@ -69,15 +61,50 @@ describe('Send store api requests', () => {
 
 
     it('Send All Requests',async () => {
-        // todo -
         // generate store id
-        // send one request
-        // store the execution service name
+        let storeIds = [];
+        let servicesStoresCounter = [];
+        let storesHandledRequestsCounter = [];
+        for (let i = 0; i < numberOfMockStores; i++) {
+            let generatedStoreId = uuid.v4();
+            storeIds.push();
+            servicesStoresCounter[generatedStoreId] = 0; //init registered stores counter
+        }
+
+        // send one request for each store (to register services)
+        for (let i = 0; i < storeIds.length; i++) {
+            let response = await chai.request(server)
+                .get(`api/v1/storeId/${storeIds[i]}/giftCard`)
+                .then((res) => {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.be.an('object');
+                    expect(res.body.storeId).to.be.a('string', generatedStoreId);
+                    expect(res.body.executionService).to.be.a('string');
+                    servicesStoresCounter[res.body.executionService] ? servicesStoresCounter[res.body.executionService]++ : servicesStoresCounter[res.body.executionService] = 0; // init if execution service is unset
+                    storesHandledRequestsCounter[storeIds[i]] ? servicesStoresCounter[storeIds[i]]++ : servicesStoresCounter[storeIds[i]] = 0; // init if store is unset
+                    console.log(`Routed store ${generatedStoreId} to execution service: ${res.body.executionService}`);
+                });
+        }
+
         // make sure the other requests sent for the same execution service
         // do same for all routes for the same store
         // mix several stores - to test cross stores
+
+        // init request bank to be sent
+        let requestList = [];
+        const numberOfRequestsPerStoreRoute = 50;
+        let mockObjects = [];
+        for (let i = 0; i < storeIds.length; i++) {
+            for (let j = 0; j < numberOfRequestsPerStoreRoute; j++) {
+                let giftMockObject = {
+                    type: 'giftcard',
+                    storeId: storeIds[i],
+                };
+
+            }
+        }
         
-        let responses = mockRequestsUrls.map(async (trackQueryRecord) => {
+        let responses = mockObjects.map(async (trackQueryRecord) => {
 
             // parse track query record
             let rawQueryObject = JSON.parse(trackQueryRecord.query);
