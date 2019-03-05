@@ -12,26 +12,21 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 const server = 'localhost:3000';
-const numberOfTracks = 50;
+const numberOfRequestsPerStoreRoute = 50;
 let replayedTracksTokens = [];
-let trackQueryRecords = null;
-describe('Replay Tracks', () => {
+let mockRequestsUrls = [];
+for (let i = 0; i < numberOfRequestsPerStoreRoute; i++) {
+    let generatedStoreId =
+    for (let i = 0; i < numberOfRequestsPerStoreRoute; i++) {
+        mockRequestsUrls.push('api/v1/storeId/123asd/giftCard');
+        mockRequestsUrls.push('/api/v1/campaigns/?');
+        mockRequestsUrls.push('api/v1/storeId/123asd/giftCard');
+    }
+}
+describe('Send store api requests', () => {
 
-    before(async () => {
-        // read track queries from out_db
-        return await chai.request(server)
-            .get(`/test/getTrackQueries/`)
-            .set('token', jwtToken)
-            .send({ numOfTracks: numberOfTracks })
-            .then((res) => {
-                trackQueryRecords = res.body.data;
-                return Promise.all([expect(res).to.not.be.an('undefined'),
-                expect(res.body.data).to.be.an('array')]);
-            });
-    });
-
-    it('Send All Tracks',async () => {
-        let responses = trackQueryRecords.map(async (trackQueryRecord) => {
+    it('Send All Requests',async () => {
+        let responses = mockRequestsUrls.map(async (trackQueryRecord) => {
 
             // parse track query record
             let rawQueryObject = JSON.parse(trackQueryRecord.query);
@@ -107,19 +102,6 @@ describe('Replay Tracks', () => {
                 expect(res.body.data.numOfPoppedRecords).to.be.a('number');
                 let numOfPoppedRecords = res.body.data.numOfPoppedRecords;
                 console.log('Total number of records written to DB: ', numOfPoppedRecords || 0);
-            });
-    });
-
-    after(async () => {
-        return await chai.request(server)
-            .post('/test/deleteTracksByTokenIds/')
-            .send({arrTokensToDelete: replayedTracksTokens})
-            .set('token', jwtToken)
-            .then((res) => {
-                let numOfDeletedRecords = res.body.data.numOfDeletedTracks;
-                let numOfDeletedTrackQueries = res.body.data.numOfDeletedTrackQueries;
-                console.log('Total number of deleted tracks (by their token): ', numOfDeletedRecords || 0);
-                console.log('Total number of deleted track queries (by their foreign key to tracks): ', numOfDeletedTrackQueries || 0);
             });
     });
 });

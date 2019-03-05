@@ -24,7 +24,8 @@ module.exports = {
                 return response.send('No store id!');
             }
             let result = await routeRequest(storeId, request);
-            response.send(result.data);
+            let {queue, data} = result;
+            response.send({storeId: data.storeId, executionService: queue.name});
         } catch (e) {
             console.log('error occured: ', e);
             response.send(e);
