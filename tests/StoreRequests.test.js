@@ -12,7 +12,7 @@ const chaiHttp = require('chai-http');
 const expect = chai.expect;
 chai.use(chaiHttp);
 
-const server = 'localhost:3000';
+const server = 'localhost:3000/';
 const numberOfRequestsPerStoreRoute = 50;
 const numberOfMockStores= 5;
 let mockRequestsUrls = [];
@@ -32,10 +32,11 @@ describe('Send store api requests', () => {
             .get(`api/v1/campaigns`)
             .query({storeId: generatedStoreId})
             .then((res) => {
-                expect(res.body.data).to.be.an('object');
-                expect(res.body.data.storeId).to.be.a('string', generatedStoreId);
-                expect(res.body.data.executionService).to.be.a('string');
-                console.log(`Routed store ${generatedStoreId} to execution service: ${res.body.data.executionService}`);
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('object');
+                expect(res.body.storeId).to.be.a('string', generatedStoreId);
+                expect(res.body.executionService).to.be.a('string');
+                console.log(`Routed store ${generatedStoreId} to execution service: ${res.body.executionService}`);
             });
     });
 
@@ -44,10 +45,11 @@ describe('Send store api requests', () => {
         return await chai.request(server)
             .get(`api/v1/storeId/${generatedStoreId}/giftCard`)
             .then((res) => {
-                expect(res.body.data).to.be.an('object');
-                expect(res.body.data.storeId).to.be.a('string', generatedStoreId);
-                expect(res.body.data.executionService).to.be.a('string');
-                console.log(`Routed store ${generatedStoreId} to execution service: ${res.body.data.executionService}`);
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('object');
+                expect(res.body.storeId).to.be.a('string', generatedStoreId);
+                expect(res.body.executionService).to.be.a('string');
+                console.log(`Routed store ${generatedStoreId} to execution service: ${res.body.executionService}`);
             });
     });
 
@@ -57,10 +59,11 @@ describe('Send store api requests', () => {
             .get(`api/v1/settings`)
             .set('storeId', generatedStoreId)
             .then((res) => {
-                expect(res.body.data).to.be.an('object');
-                expect(res.body.data.storeId).to.be.a('string', generatedStoreId);
-                expect(res.body.data.executionService).to.be.a('string');
-                console.log(`Routed store ${generatedStoreId} to execution service: ${res.body.data.executionService}`);
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('object');
+                expect(res.body.storeId).to.be.a('string', generatedStoreId);
+                expect(res.body.executionService).to.be.a('string');
+                console.log(`Routed store ${generatedStoreId} to execution service: ${res.body.executionService}`);
             });
     });
 
