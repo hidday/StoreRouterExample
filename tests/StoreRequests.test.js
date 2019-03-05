@@ -68,70 +68,78 @@ describe('Send store api requests', () => {
     });
 
 
-    // it('Send All Requests',async () => {
-    //     let responses = mockRequestsUrls.map(async (trackQueryRecord) => {
-    //
-    //         // parse track query record
-    //         let rawQueryObject = JSON.parse(trackQueryRecord.query);
-    //
-    //         let type = trackQueryRecord.track_type || rawQueryObject.track_type;
-    //
-    //         switch (type) {
-    //             case "click":
-    //                 let queryString = querystring.stringify(rawQueryObject);
-    //                 return await chai.request(server)
-    //                     .get(`/track/click/?${queryString}`)
-    //                     .set('Cookie', '_gid=trackTestingMarker')
-    //                     .redirects(0)
-    //                     .then((res) => {
-    //                         expect(res).to.not.be.an('undefined');
-    //                         if (res !== undefined) {
-    //                             expect(res).to.have.status(302);
-    //                         }
-    //                         expect(res).to.have.cookie('ADS_TOKEN');
-    //                         let tokenCookie = cookie.parse(res.headers['set-cookie'][0]);
-    //                         if (tokenCookie.ADS_TOKEN !== undefined) {
-    //                             replayedTracksTokens.push(tokenCookie.ADS_TOKEN);
-    //                             return tokenCookie.ADS_TOKEN;
-    //                         }
-    //                         return false;
-    //                     });
-    //             case "event":
-    //                 let eventName = rawQueryObject.eventName;
-    //                 return await chai.request(server)
-    //                     .get(`/track/event/${eventName}`)
-    //                     .set('Cookie', '_gid=trackTestingMarker')
-    //                     .then((res) => {
-    //                         expect(res).to.not.be.an('undefined');
-    //                         if (res !== undefined) {
-    //                             expect(res).to.have.status(200);
-    //                         }
-    //                         expect(res.body).to.be.a('string');
-    //                         replayedTracksTokens.push(res.body);
-    //                         return res.body;
-    //                     });
-    //             case "action":
-    //                 let actionId = rawQueryObject.actionId;
-    //                 let actionName = rawQueryObject.actionName;
-    //                 return await chai.request(server)
-    //                     .get(`/track/action/${actionName}/${actionId}`)
-    //                     .set('Cookie', '_gid=trackTestingMarker')
-    //                     .then((res) => {
-    //                         expect(res).to.not.be.an('undefined');
-    //                         if (res !== undefined) {
-    //                             expect(res).to.have.status(200);
-    //                         }
-    //                         expect(res.body).to.be.a('string');
-    //                         replayedTracksTokens.push(res.body);
-    //                         return res.body;
-    //                     });
-    //             default:
-    //                 break;
-    //         }
-    //     });
-    //
-    //     return Promise.all(responses);
-    // });
+    it('Send All Requests',async () => {
+        // todo -
+        // generate store id
+        // send one request
+        // store the execution service name
+        // make sure the other requests sent for the same execution service
+        // do same for all routes for the same store
+        // mix several stores - to test cross stores
+        
+        let responses = mockRequestsUrls.map(async (trackQueryRecord) => {
+
+            // parse track query record
+            let rawQueryObject = JSON.parse(trackQueryRecord.query);
+
+            let type = trackQueryRecord.track_type || rawQueryObject.track_type;
+
+            switch (type) {
+                case "click":
+                    let queryString = querystring.stringify(rawQueryObject);
+                    return await chai.request(server)
+                        .get(`/track/click/?${queryString}`)
+                        .set('Cookie', '_gid=trackTestingMarker')
+                        .redirects(0)
+                        .then((res) => {
+                            expect(res).to.not.be.an('undefined');
+                            if (res !== undefined) {
+                                expect(res).to.have.status(302);
+                            }
+                            expect(res).to.have.cookie('ADS_TOKEN');
+                            let tokenCookie = cookie.parse(res.headers['set-cookie'][0]);
+                            if (tokenCookie.ADS_TOKEN !== undefined) {
+                                replayedTracksTokens.push(tokenCookie.ADS_TOKEN);
+                                return tokenCookie.ADS_TOKEN;
+                            }
+                            return false;
+                        });
+                case "event":
+                    let eventName = rawQueryObject.eventName;
+                    return await chai.request(server)
+                        .get(`/track/event/${eventName}`)
+                        .set('Cookie', '_gid=trackTestingMarker')
+                        .then((res) => {
+                            expect(res).to.not.be.an('undefined');
+                            if (res !== undefined) {
+                                expect(res).to.have.status(200);
+                            }
+                            expect(res.body).to.be.a('string');
+                            replayedTracksTokens.push(res.body);
+                            return res.body;
+                        });
+                case "action":
+                    let actionId = rawQueryObject.actionId;
+                    let actionName = rawQueryObject.actionName;
+                    return await chai.request(server)
+                        .get(`/track/action/${actionName}/${actionId}`)
+                        .set('Cookie', '_gid=trackTestingMarker')
+                        .then((res) => {
+                            expect(res).to.not.be.an('undefined');
+                            if (res !== undefined) {
+                                expect(res).to.have.status(200);
+                            }
+                            expect(res.body).to.be.a('string');
+                            replayedTracksTokens.push(res.body);
+                            return res.body;
+                        });
+                default:
+                    break;
+            }
+        });
+
+        return Promise.all(responses);
+    });
 
 });
 
