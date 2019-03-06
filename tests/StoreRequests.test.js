@@ -127,7 +127,7 @@ describe('Send store api requests', (done) => {
                             expect(res.body.executionService).to.be.a('string');
                             let {executionService, storeId} = res.body;
                             storeId in storesHandledRequestsCounter ? storesHandledRequestsCounter[storeId]++ : storesHandledRequestsCounter[storeIds[storeId]] = 0; // init if store is unset
-                            console.log(`Routed store ${storeId} to execution service: ${executionService}`);
+                            // console.log(`Routed store ${storeId} to execution service: ${executionService}`);
                             return Promise.resolve(res);
                         });
                 case "campaigns":
@@ -141,7 +141,7 @@ describe('Send store api requests', (done) => {
                             expect(res.body.executionService).to.be.a('string');
                             let {executionService, storeId} = res.body;
                             storeId in storesHandledRequestsCounter ? storesHandledRequestsCounter[storeId]++ : storesHandledRequestsCounter[storeIds[storeId]] = 0; // init if store is unset
-                            console.log(`Routed store ${storeId} to execution service: ${executionService}`);
+                            // console.log(`Routed store ${storeId} to execution service: ${executionService}`);
                             return Promise.resolve(res);
                         });
                 case "settings":
@@ -155,7 +155,7 @@ describe('Send store api requests', (done) => {
                             expect(res.body.executionService).to.be.a('string');
                             let {executionService, storeId} = res.body;
                             storeId in storesHandledRequestsCounter ? storesHandledRequestsCounter[storeId]++ : storesHandledRequestsCounter[storeIds[storeId]] = 0; // init if store is unset
-                            console.log(`Routed store ${storeId} to execution service: ${executionService}`);
+                            // console.log(`Routed store ${storeId} to execution service: ${executionService}`);
                             return Promise.resolve(res);
                         });
                 default:
