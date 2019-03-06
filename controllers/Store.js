@@ -11,7 +11,7 @@ module.exports = {
             }
             let result = await routeRequest(storeId, request);
             let {queue, data} = result;
-            response.send({storeId: data.storeId, executionService: queue.name});
+            response.status(200).json({storeId: data.storeId, executionService: queue.name});
         } catch (e) {
             console.log('error occured: ', e);
             response.send(e);
@@ -26,7 +26,7 @@ module.exports = {
             }
             let result = await routeRequest(storeId, request);
             let {queue, data} = result;
-            response.send({storeId: data.storeId, executionService: queue.name});
+            response.status(200).json({storeId: data.storeId, executionService: queue.name});
         } catch (e) {
             console.log('error occured: ', e);
             response.send(e);
@@ -41,7 +41,7 @@ module.exports = {
             }
             let result = await routeRequest(storeId, request);
             let {queue, data} = result;
-            response.send({storeId: data.storeId, executionService: queue.name});
+            response.status(200).json({storeId: data.storeId, executionService: queue.name});
 
             // console.log(`Store Id: ${storeId} . Request Data: ${request}`);
         } catch (e) {

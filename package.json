@@ -12,6 +12,7 @@
     "chai-http": "^4.2.1",
     "circular-json": "^0.5.9",
     "collections": "^5.1.8",
+    "cookie": "latest",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
@@ -22,8 +23,8 @@
     "morgan": "~1.9.0",
     "priorityqueue": "^0.2.1",
     "pug": "2.0.0-beta11",
-    "uuid": "^3.3.2",
-    "cookie": "latest"
+    "shuffle-array": "^1.0.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "chai": "latest",
